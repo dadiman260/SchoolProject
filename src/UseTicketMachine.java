@@ -1,6 +1,6 @@
 import java.util.Scanner;
 public class UseTicketMachine {
-	
+
 	public static void main(String[] args){
 		@SuppressWarnings("resource")
 		double till_float = 0;
@@ -11,17 +11,17 @@ public class UseTicketMachine {
 			TicketHandler Child = new TicketHandler("Child", 5);
 			TicketHandler Student = new TicketHandler("Student", 7);
 			TicketHandler OAP = new TicketHandler("OAP", 8);
-			
-			TicketTypes ww2 = new TicketTypes("ww2", 300);
-			TicketTypes roman = new TicketTypes("roman", 300);
-			TicketTypes warhole = new TicketTypes("warhole" ,300);
-			
+
+			ShowType ww2 = new ShowType("ww2", 300);
+			ShowType roman = new ShowType("roman", 300);
+			ShowType warhole = new ShowType("warhole" ,300);
+
 		while(true){
 			int choice = scanner.nextInt();
 			TicketHandler TicketType = null;
 			switch (choice) {
             case 1:  TicketType = Adult;
-            	
+
             	System.out.println("Please Enter Amount of Adult tickets you want");
             	int d = scanner.nextInt();
             	System.out.println("Please Enter Desired Exhabition");
@@ -29,22 +29,28 @@ public class UseTicketMachine {
             	System.out.println("2: roman");
             	System.out.println("3: warhole");
             	int choice2 = scanner.nextInt();
-            	TicketTypes f = null;	
+            	ShowType f = null;
+
             	switch (choice2){
-            		case 1: 
+            		case 1:
             			f = ww2;
             			break;
-            		case 2: 
+            		case 2:
             			f = roman;
             			break;
-            		case 3: 
+            		case 3:
             			f = warhole;
             			break;
+                    default:
+                        //Continue if choice isn't correct
+                        System.out.println( "Incorrect choice, please try again." );
+                        continue;
             	}
-            	if(f.left>0){
-            	f.left = f.left - d;
+
+            	if(f.getAmountLeft()>0){
+            	f.pay( d );
             	double Price = TicketType.Price*d;
-            	System.out.println(f.left);
+            	System.out.println(f.getAmountLeft());
             	System.out.println(Price);
 				while(Paid  < Price){
 				 double h = 0;
@@ -100,19 +106,19 @@ public class UseTicketMachine {
 					 System.out.println("Enter the amount given by the customer");
 					 g = scanner.nextInt();
 					 break;
-				
-					 
+
+
 				 }
-				Paid = Paid + g;
+				Paid += g;
 				System.out.println("Amount paid by ther customer = £"+ Paid);
 				System.out.println("Amount still to pay = £"+ (Price - Paid));
 				if(Paid>Price){
 					change = Paid - Price;
 				}
-					
-			
-				}	
-				till_float = till_float + (Paid - change);
+
+
+				}
+				till_float += (Paid - change);
 				System.out.println("Change = £" + change);
 				System.out.println("Till Float = £" + till_float);
 				change = 0;
@@ -127,8 +133,8 @@ public class UseTicketMachine {
             break;
             default: System.out.println("invalid ticket type");
                      break;
-         		
-			    
+
+
         }
 			System.out.println(TicketType);
 		}
